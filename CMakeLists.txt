@@ -4,4 +4,5 @@ add_executable(
     MainWithCards
     main.cc
     Card.cc
+    Deck.cc
 )
