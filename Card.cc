@@ -10,6 +10,15 @@ Card::Card(int r, Suit s){
     suit = s;
 };
 
+int Card::getRank() const {return rank;};
+Suit Card::getSuit() const {return suit;};
+
+void Card::update(int r, Suit s) {
+    const Card newCard = Card(r,s);
+    rank = newCard.getRank();
+    suit = newCard.getSuit();
+};
+
 std::string Card::toString() {
     std::string rankPart;
     std::string suitPart;
@@ -29,4 +38,16 @@ std::string Card::toString() {
         case Suit::Diamonds: {suitPart = "♦";break;}
         };
         return suitPart+rankPart;
-}
+};
+
+bool Card::isRed() const {return suit == Suit::Hearts || suit == Suit::Diamonds;};
+bool Card::isBlack() const {return suit == Suit::Spades || suit == Suit::Clubs;};
+bool Card::isFace() const {return rank == 11 || rank == 12 || rank == 13;};
+bool Card::isAce() const {return rank == 1;}
+bool Card::isJoker() const {return rank == 0;};
+bool Card::sameRank(Card other) const {return rank == other.rank;};
+bool Card::sameSuit(Card other) const {
+    if (this->isJoker() || other.isJoker()) {return this->isRed() == other.isRed();};
+    return this->suit == other.suit;
+};
+bool Card::operator==(const Card &other) const {return this->sameRank(other) && this->sameSuit(other);};
